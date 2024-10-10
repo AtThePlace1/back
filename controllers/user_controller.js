@@ -10,7 +10,7 @@ const signUpController = async (req, res) => {
 
   try {
     await userService.signUpService(email, nickName, pwd);
-    res.status(201).json({ message: 'USER_CREATED' });
+    res.status(201).json({ message: 'USER CREATED' });
   } catch (error) {
     console.log(error);
     res.status(error.statusCode || 500).json({ error: error.meassage });
