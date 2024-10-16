@@ -1,31 +1,30 @@
-const { getEmailByUser } = require('../models/user_dao');
+const userDao = require('../models/user_dao');
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY } = process.env.SECRETKEY;
+const SECRET_KEY = process.env.SECRETKEY
 
-const validateToken = async (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
+  const accessToken = req.headers['authorization'];
+
   try {
-    const access_token = req.headers['authorization'];
-
-    if (!access_token) {
+    if (!accessToken) {
       res.status(401).json({ error: 'TOKEN_NOT_PROVIDED' });
       return;
     }
 
-    const userId = jwt.verify(access_token, SECRET_KEY);
-    const foundUser = await getEmailByUser(userId.userEmail);
+    const userObj = await jwt.verify(accessToken, SECRET_KEY);
+    const userData = await userDao.getEmailByUser(userObj.email);
 
-    if (!foundUser) {
-      const error = new Error('USER_NOT_FOUND');
-      error.statusCode = 404;
-      throw error;
+    if (userData) {
+      return next();
+    } else {
+      const error = new Error('NO_USER')
+      error.statusCode = 400
+      throw error
     }
-
-    req.foundUser = foundUser;
-    next();
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'INVALID_TOKEN' });
+    res.status(401).json({ error: 'INVALID_TOKEN' });
   }
 };
 
-module.exports = { validateToken };
+module.exports = { isAuthenticated };

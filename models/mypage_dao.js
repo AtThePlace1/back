@@ -7,8 +7,7 @@ const getMyPageDetails = async (pk) => {
    JSON_OBJECT(
    'cafe_name', cafes.cafe_name, 
    'cafe_address', cafes.location_address
-  )
-   ) AS likeList
+  )) AS likeList
    FROM users
    LEFT JOIN cafe_likes ON users.id = cafe_likes.user_id
    LEFT JOIN cafes ON cafe_likes.cafe_id = cafes.id
