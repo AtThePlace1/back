@@ -24,4 +24,13 @@ const getNickNameByUser = async (nickName) => {
   return userNickName
 };
 
-module.exports = { createUser, getEmailByUser, getNickNameByUser }
+const logIn = async (email) => {
+  const [user] = await myDataSource.query(`
+    SELECT id, email, password
+    FROM users
+    WHERE email = ?`
+    , [email]);
+  return user
+};
+
+module.exports = { createUser, getEmailByUser, getNickNameByUser, logIn }
