@@ -12,4 +12,16 @@ const signUpController = async (req, res) => {
   }
 }
 
-module.exports = { signUpController }
+const logInController = async (req, res) => {
+  const { email, pwd } = req.body;
+
+  try {
+    const token = await userService.logInService(email, pwd);
+    res.status(201).json({ message: '로그인 완료', token })
+  } catch (error) {
+    console.log(error);
+    res.status(error.statusCode || 500).json({ error: error.message })
+  }
+}
+
+module.exports = { signUpController, logInController }
