@@ -5,6 +5,7 @@ const getMyPageDetails = async (pk) => {
    SELECT nickname, profile_image,
    JSON_ARRAYAGG(
    JSON_OBJECT(
+   'cafe_id', cafes.id,
    'cafe_name', cafes.cafe_name, 
    'cafe_address', cafes.location_address
   )) AS likeList
@@ -16,4 +17,10 @@ const getMyPageDetails = async (pk) => {
     `, [pk])
 }
 
-module.exports = { getMyPageDetails }
+const getPkByUser = async (pk) => {
+  return await myDataSource.query(`
+    SELECT id FROM users WHERE id = ?`, [pk]
+  )
+}
+
+module.exports = { getMyPageDetails, getPkByUser }
