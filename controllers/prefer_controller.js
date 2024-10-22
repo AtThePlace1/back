@@ -1,10 +1,10 @@
 const preferService = require('../services/prefer_services.js')
 
 const userPreferController = async (req, res) => {
-  const pet = req.query.pet;
-  const decaffe = req.query.decaffe;
-  const group_seat = req.query.group_seat;
-  const terrace = req.query.terrace;
+  const pet = req.query.pet || 0;
+  const decaffe = req.query.decaffe || 0;
+  const group_seat = req.query.group_seat || 0;
+  const terrace = req.query.terrace || 0;
 
   try {
     const preferCafe = await preferService.userPreferService(pet, decaffe, group_seat, terrace);
