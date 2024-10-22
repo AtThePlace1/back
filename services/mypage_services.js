@@ -13,4 +13,8 @@ const myPageService = async (pk) => {
   return await mypageDao.getMyPageDetails(pk);
 }
 
-module.exports = { myPageService };
+const profileService = async (pk, profile_url) => {
+  return await mypageDao.uploadProfile(pk, profile_url)
+}
+
+module.exports = { myPageService, profileService };

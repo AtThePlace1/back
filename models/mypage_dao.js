@@ -23,4 +23,10 @@ const getPkByUser = async (pk) => {
   )
 }
 
-module.exports = { getMyPageDetails, getPkByUser }
+const uploadProfile = async (pk, profile_url) => {
+  return await myDataSource.query(`
+    UPDATE users
+    SET profile_image = ?
+    WHERE id = ?`, [profile_url, pk])
+}
+module.exports = { getMyPageDetails, getPkByUser, uploadProfile }
