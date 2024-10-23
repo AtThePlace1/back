@@ -9,4 +9,12 @@ const cafeDetail = async (cafe_pk) => {
     WHERE cafes.id = ?` , [cafe_pk])
 }
 
-module.exports = { cafeDetail }
+const cafeMap = async () => {
+  return await myDataSource.query(`
+    SELECT cafes.id, cafe_name, opening_hours, location_address, latitude, longitude, contact_number,cafe_images.image_main
+    FROM cafes
+    LEFT JOIN cafe_images ON cafes.id = cafe_images.cafe_id
+    `)
+}
+
+module.exports = { cafeDetail, cafeMap }

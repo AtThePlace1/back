@@ -4,4 +4,7 @@ const detailService = async (cafe_pk) => {
   return await cafeDao.cafeDetail(cafe_pk);
 }
 
-module.exports = { detailService }
+const mapService = async () => {
+  return await cafeDao.cafeMap();
+}
+module.exports = { detailService, mapService }
